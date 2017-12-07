@@ -35,7 +35,7 @@ export class RegistroComponent implements OnInit {
     
   }
 
-  private registrar()
+  registrar()
   {
     var usuarios = JSON.parse(localStorage.getItem("USP"));
     
