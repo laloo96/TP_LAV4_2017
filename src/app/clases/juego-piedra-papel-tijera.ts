@@ -14,11 +14,11 @@ export class JuegoPiedraPapelTijera {
     
     public get maquinasPick() : string {
          if(this.eleccionMaquina >= 1 && this.eleccionMaquina <= 10)
-            return "../../assets/imagenes/Piedra.jpg";      
+            return "./assets/imagenes/Piedra.jpg";      
          else if(this.eleccionMaquina > 10 && this.eleccionMaquina <=20)
-            return "../../assets/imagenes/Papel.jpg";
+            return "./assets/imagenes/Papel.jpg";
          else
-            return "../../assets/imagenes/Tijera.jpg";
+            return "./assets/imagenes/Tijera.jpg";
     }
 
     
