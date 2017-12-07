@@ -10,4 +10,18 @@ height: 70px;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #100000;
-    }
+}
+
+.list-group-item
+{
+    height: 200px;
+    padding: 50px 20px;
+}
+
+.estilotextJugar
+{   
+    text-align:center;
+    font-size: 50px;
+    color: #861177fd;
+    font-weight: bolder;
+}

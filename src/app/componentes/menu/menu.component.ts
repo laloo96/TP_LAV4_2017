@@ -8,8 +8,16 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
+  mostrarSalir:Boolean = false;
+  mostrarIngresar:boolean = true;
+
   constructor(private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) { 
+      if(localStorage.getItem('usuario') !== null){
+          this.mostrarIngresar = false;
+          this.mostrarSalir = true;
+      }
+    }
 
   ngOnInit() {
   }
@@ -28,7 +36,22 @@ export class MenuComponent implements OnInit {
       case 'AgilidadaMasListado':
           this.router.navigate(['/Juegos/AgilidadaMasListado']);
         break;
+      case 'AdivinaPais':
+        this.router.navigate(['/Juegos/AdivinaPais']);
+      break;
+      case 'PPT':
+        this.router.navigate(['/Juegos/PPT']);
+      break;
+      case 'Anagrama':
+      this.router.navigate(['/Juegos/Anagrama']);
+      break;        
     }
+  }
+
+  Salir()
+  {
+    localStorage.removeItem("usuario");
+    this.router.navigate(['/Principal']);
   }
 
 }

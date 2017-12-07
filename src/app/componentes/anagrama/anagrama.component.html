@@ -1,3 +1,137 @@
-<p>
-  anagrama works!
-</p>
+<button data-toggle="collapse" data-target="#demo" class="btn btn-primary btn-md">¿Como jugar?</button>
+<div id="demo" class="collapse" style="padding-left:5px;">
+  <b>1-Haga click en "Jugar".</b> <br>
+  <b>2-Se entregaran 5 palabras con la letras desordenadas las cuales habra que adivinar.</b>  <br>
+  <b>3-Al terminar el jugo podra guardar su puntaje final o comenzar otra vez.</b>  <br>
+
+  <b>El puntaje por acierto es de 1000 puntos por cada error se descuentan 5 puntos.</b> <br>
+</div>
+
+<div style="text-align:center;margin:0 auto; height:600px; width:600px; background-color:#2970a0;">
+  <h1 class="titulo">Anagrama</h1>
+  
+  <!--Tag de juego en vivo-->
+  <div style="padding-top:50px;">
+    <p *ngIf="mostrarParaResolver" style="color:black;font-size:50px;">{{wordToSort}}</p>
+    <input type="text" *ngIf="mostrarParaResolver" [(ngModel)]="entradaUsuario" style="background:#5e8aa7;margin-bottom:40px;"><br>
+    
+    <p *ngIf="mostrarToF" [class]="mensajeToF == 'Incorrecto' ? 'incorrecto' : 'correcto'">¡{{mensajeToF}}!</p>
+    
+    <button class="btn btn-md btn-success btn-verificar" *ngIf="mostrarParaResolver" (keyup.enter)="VerificarPalabra()"(click)="VerificarPalabra()"><b class="textoBtnVerificar">Verificar</b></button>
+    <button class="btn btn-md btn-danger btn-siguiente" *ngIf="mostrarParaResolver" (click)="SiguientePalabra()"><b class="textoBtnSiguiente">Siguiente palabra</b></button>
+  </div>
+  
+
+  <!--Tag de muestreo final-->
+  <p *ngIf="mostrarFinalBtn" style="margin-bottom:100px;font-size:40px;"> El puntaje final es de {{miAnagrama.puntajeFinal}} puntos.</p>
+  <button class="btn btn-md btn-primary btn-guardarP" *ngIf="mostrarFinalBtn" (click)="GuardarPuntaje()">Guardar puntaje</button>
+  <button class="btn btn-md btn-reiniciar" *ngIf="mostrarFinalBtn" (click)="ReiniciarJuego()">Reiniciar juego</button>
+
+  <button class="btn btn-success btn-lg btn-jugar" *ngIf="mostrarJugarBtn" (click)="ComenzarJuego()" ><b class="textoBotonJugar">JUGAR</b></button>
+
+</div>
+<h1 class="headerPuntajes">Mejores Puntajes</h1>
+<div class="estiloDivTabla" >
+  <table class="table table-bordered" style="background:grey;text-align:center;">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Puntaje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let puntajes of puntajesParaTabla['puntajes']">
+        <td>{{puntajes.usuario}}</td>
+        <td>{{puntajes.puntaje}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<style>
+
+  .incorrecto
+  {
+    color:red;
+    font-size: 40px;
+  }
+
+  .correcto
+  {
+    color:green;
+    font-size: 40px;
+  }
+
+  .btn-jugar
+  {   
+      margin-top: 70px;
+      width: 300px;
+      height: 100px;
+  }
+
+  .textoBotonJugar
+  {
+      font-size: 50px;
+  }
+
+  .btn-verificar
+  {
+    width: 150px;
+    height: 40px;
+    margin-right: 15px;
+  }
+
+  .btn-siguiente
+  {
+    width: 150px;
+    height: 40px;
+  }
+
+  .textoBtnSiguiente
+  {
+    font-size: 15px;
+  }
+
+  .textoBtnVerificar
+  {
+    font-size: 15px;
+  }
+
+  .btn-guardarP
+  {
+    width: 150px;
+    height: 40px;
+    margin-right: 20px;
+  }
+
+  .btn-reiniciar
+  {
+    width: 150px;
+    height: 40px;
+  }
+
+  .titulo
+  {
+    padding-top:30px;
+    color:#29094e;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 70px;
+  }
+
+  .estiloDivTabla
+  {
+    text-align:center;
+    padding-left:5px;
+    width:600px;
+    position: absolute;
+    left: 341px;
+  }
+
+  .headerPuntajes
+  {
+    font-size: 40px;
+    text-align: center;
+  }
+</style>

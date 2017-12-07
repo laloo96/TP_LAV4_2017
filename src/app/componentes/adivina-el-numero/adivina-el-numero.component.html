@@ -1,26 +1,123 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <!--app-menu></app-menu-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div style="text-align:center">
+<button data-toggle="collapse" data-target="#demo" class="btn btn-primary btn-md btncomojugar">¿Como jugar?</button>
+<div id="demo" class="collapse" style="padding-left:5px;">
+  <b>1-Haga click en "Jugar".</b> <br>
+  <b>2-Se entregaran 5 palabras con la letras desordenadas las cuales habra que adivinar.</b>  <br>
+  <b>3-Al terminar el jugo podra guardar su puntaje final o comenzar otra vez.</b>  <br>
+
+  <b>El puntaje por acierto es de 1000 puntos por cada error se descuentan 5 puntos.</b> <br>
+</div>
+
+<div style="text-align:center;margin-top:50px;font-family:Courier">
   <h1>
     {{nuevoJuego.nombre}}!
   </h1>
  </div>
 <h2></h2>
-<form name="juego">
 
-   <label>ingrese numero:  </label>  <input [(ngModel)]="nuevoJuego.numeroIngresado" placeholder="ingrese numero" name="numeroIngresado" type="text" class="form-control" style="width:50%"/>
-    <h1>{{nuevoJuego.numeroIngresado}}  </h1>
+<div *ngIf="mostrarJuego" style="text-align:center; margin-top:150px;">
+   
+   <label>Ingrese numero: </label>
+   <input [(ngModel)]="nuevoJuego.numeroIngresado" class="form-control inputNumero" placeholder="ingrese numero" name="numeroIngresado" type="text"/>
+    
+   <div style="text-align:center;margin:0 auto; height:100px; width:100px; background-color:#6e746d;">
+      <h1 style="padding-top:30px;color:white">{{nuevoJuego.numeroIngresado}} </h1>
+   </div>
+   
  
-    <h2 [hidden]="ocultarVerificar"><button  *ngIf="nuevoJuego.numeroSecreto!=0" (click)="verificar()" class="btn btn-success btn-lg">Verificar</button></h2>
+
+      <button type="button" class="btn btn-md" *ngIf="nuevoJuego.numeroSecreto!=0" (click)="verificar()" >Verificar numero</button>
+
  
-    <h2><button *ngIf="nuevoJuego.numeroSecreto==0 " (click)="generarnumero()"  class="btn btn-info btn-lg">Nuevo número secreto</button></h2>
+    
+    <button class="btn btn-md" *ngIf="mostrarBTNjugar " (click)="generarnumero()">Jugar</button>
+    
  
-    <h2><p *ngIf="nuevoJuego.numeroSecreto!=0" ><i class="fa fa-spinner fa-spin"></i>Esperando que ingrese un número</p></h2>
+    <h2>
+      <p type="button" *ngIf="nuevoJuego.numeroSecreto!=0" ><i class="fa fa-spinner fa-spin"></i>Esperando que ingrese un número</p>
+    </h2>
 
-    <h3 [hidden]="!nuevoJuego.gano">usted adivino el número</h3>
-    <h3 [hidden]="nuevoJuego.gano">usted aún no gano </h3>
+    <div class="estiloDivTabla" >
+            <h1 class="headerPuntajes">Mejores Puntajes</h1>
+                <table class="table table-bordered" style="background:grey;text-align:center;">
+                <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Intentos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let puntajes of puntajesParaTabla['puntajes']">
+                    <td>{{puntajes.usuario}}</td>
+                    <td>{{puntajes.intentos}}</td>
+                  </tr>
+                </tbody>
+              </table>
+    </div>
 
 
-</form>
+</div>
+
 <div id="snackbar">{{Mensajes}}</div>
+
+
+
+
+
+<style>
+
+.estiloDivTabla
+  {
+    text-align:center;
+    padding-left:5px;
+    width:600px;
+    position: absolute;
+    left: 341px;
+    padding-top:100px;
+  }
+
+  .headerPuntajes
+  {
+    font-size: 40px;
+    text-align: center;
+  }
+
+.btncomojugar
+{
+    background-color: blue;
+    width: 200px;
+}
+
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+   
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+#snackbar.Ganador {
+    background-color: #059F2F;
+}
+#snackbar.Perdedor {
+    background-color: #FF0000;
+}
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+
+
+</style>

@@ -1,57 +1,25 @@
-<!--div style="margin: 20% auto; width: 30%;">
-  <div class="row">
-    <div class="col-lg-6">
-      Usuario
-    </div>
-    <div class="col-lg-6">
-      <input type="text"  [(ngModel)]="usuario">
-    </div>
-  </div>
-  <div class="row" style="margin-top: 5px">
-    <div class="col-lg-6">
-      Clave
-    </div>
-    <div class="col-lg-6">
-      <input type="password" [(ngModel)]="clave">
-    </div>
-  </div>
-  <div class="row" style="text-align: center; margin-top: 10px">
-    <div class="col-lg-12">
-      <button (click)="Entrar()" class="btn btn-info btn-lg" >Entrar</button>
-    </div>
-  </div>
-</div-->
- <div class="container" >
-  <div class="jumbotron" style="padding:50px;">
-    <form action="return true;">
-      <div class="imgcontainer">
-        <img src="./assets/imagenes/login.png" alt="Avatar" class="avatar" max-width="104" >
-      </div>
+<app-menu></app-menu>
+<div class="container" style="width:700px;margin-top:150px;">
+  <div class="card card-container">
 
-      <div class="container">
-        <label><b>Usuario</b></label>
-        <input type="text" placeholder="Usuario"  [(ngModel)]="usuario"  name="uname" required>
+      
+      <form class="form-signin">
+          <div style="text-align:center;">
+                <img id="profile-img" class="profile-img-card" src="../../../assets/imagenes/usuariologin.png" />
+          </div>
+          <p id="profile-name" class="profile-name-card"></p>
+        <span id="reauth-email" class="reauth-email"></span>
+          <input type="email" [(ngModel)]="email" name="email" class="form-control" placeholder="Email" required autofocus>
+          <input type="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Contraseña" required>
+          <div id="remember" class="checkbox">
+              <label>
+                  <input type="checkbox" value="remember-me"> Recordarme
+              </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="Entrar()">Ingresar</button>
+          <button class="btn btn-lg btn-danger btn-block btn-signin" type="submit"><a routerLink="/Registro">Registrarse</a></button>
+      </form><!-- /form -->
+  </div><!-- /card-container -->
+    <div class="alert alert-danger"  *ngIf="mostrarError" role="alert">Error! Email o contraseña inconrrectos.</div>
 
-        <label><b>Clave</b></label>
-        <input type="password" placeholder="Clave"  [(ngModel)]="clave" name="psw" required>
-            
-        <button *ngIf="logeando"  (click)="MoverBarraDeProgreso()" >Ingresar</button>
-       
-        <div *ngIf="!logeando" class="progress">
-            <div class="progress-bar progress-bar-info progress-bar-striped active" [class]="clase" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" [style.width]="ProgresoDeAncho" >
-              {{progresoMensaje}} - {{progreso}}%
-            </div>
-        </div>
-       
-        <input type="checkbox" checked="checked"> Recordar mis datos
-      </div>
-
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" class="cancelbtn">Cancelar</button>
-        <button type="button" class="aceptbtn" routerLink="/Registro" >Registrarse</button>
-        <span class="psw">Te olvidaste <a href="#">la clave?</a></span>
-      </div>
-     
-    </form>
-  </div>
-</div>
+</div><!-- /container -->

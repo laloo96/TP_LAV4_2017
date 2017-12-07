@@ -1,0 +1,28 @@
+.boton-piedra-usuario .boton-piedra-maquina
+{
+    position: relative;
+    right: 25%;
+}
+
+.boton-papel-usuario .boton-papel-maquina
+{
+    position: relative;
+    right: 50%;
+}
+
+.boton-tijera-usuario .boton-tijera-maquina
+{
+    position: relative;
+    right: 75%;
+}
+
+.btn-jugar
+{
+    width: 300px;
+    height: 100px;
+}
+
+.textoBotonJugar
+{
+    font-size: 50px;
+}

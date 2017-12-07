@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-
 import {Subscription} from "rxjs";
 import {TimerObservable} from "rxjs/observable/TimerObservable";
+import {LoginService} from '../../servicios/login.service';
+import { forEach } from '@angular/router/src/utils/collection';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,31 +13,78 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 export class LoginComponent implements OnInit {
 
   private subscription: Subscription;
-  usuario = '';
-  clave= '';
+  email = '';
+  password= '';
   progreso: number;
   progresoMensaje="esperando..."; 
   logeando=true;
   ProgresoDeAncho:string;
+  respuestaSV:any;
+  mostrarError:Boolean;
+  repetidor:any;
+  flagi:boolean = false;
 
   clase="progress-bar progress-bar-info progress-bar-striped ";
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router) {
+  constructor(private route: ActivatedRoute,private router: Router, private mihttp:LoginService) {
       this.progreso=0;
       this.ProgresoDeAncho="0%";
-
   }
 
   ngOnInit() {
   }
 
   Entrar() {
-    if (this.usuario === 'admin' && this.clave === 'admin') {
-      this.router.navigate(['/Principal']);
+    
+    if (this.email != '' && this.password != '') {
+
+      var usuarios = JSON.parse(localStorage.getItem("USP"));
+
+      usuarios["misUsuarios"].forEach(user => {
+        
+        if(user["email"] == this.email && user["password"] == this.password)
+        {
+          this.flagi = true;
+          this.solucion();
+        }
+        
+      });
+
+      if(!this.flagi)
+        this.mostrarError;
+      
+
     }
+    else
+      this.MostrarError();
   }
+
+  
+
+  solucion()
+  {
+      let usuarioXmail = this.email.split("@",1);
+      localStorage.setItem("usuario", usuarioXmail[0]);
+      this.router.navigate(['/Juegos']);
+  }
+
+  MostrarError()
+  {
+      this.mostrarError = true;
+      let g= 3;
+      
+      this.repetidor = setInterval(()=>{ 
+        
+        g--;
+  
+        if(g==0 ) {
+          clearInterval(this.repetidor);
+          this.mostrarError = false;
+        }
+      
+      }, 1000);
+  }
+  /*
   MoverBarraDeProgreso() {
     
     this.logeando=false;
@@ -76,6 +125,6 @@ export class LoginComponent implements OnInit {
       }     
     });
     //this.logeando=true;
-  }
+  }*/
 
 }

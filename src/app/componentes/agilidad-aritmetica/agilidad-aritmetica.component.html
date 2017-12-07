@@ -2,37 +2,127 @@
 <!--app-menu></app-menu-->
 <!-- index.html -->
 
+<button data-toggle="collapse" data-target="#demo" class="btn btn-primary btn-md">¿Como jugar?</button>
+<div id="demo" class="collapse" style="padding-left:5px;">
+  <b>1-Haga click en "Jugar".</b> <br>
+  <b>2-Repidamente aparece una operacion la cual debe resolver lo mas rapido posible para sumar la mayor cantidad de puntos.</b>  <br>
+  <b>3-Al terminar el jugo podra guardar su puntaje final o comenzar otra vez.</b>  <br>
 
-<form name="juego">
-<ul>
-   <li>
-   Primer número: <input [(ngModel)]="nuevoJuego.numeroIngresado" placeholder="ingrese numero" name="numeroIngresado" type="text" class="form-control" style="width:50%" readonly/>
-  
-  </li>
-  <li>
-   Operador: <input [(ngModel)]="nuevoJuego.numeroIngresado" placeholder="ingrese numero" name="numeroIngresado" type="text" class="form-control" style="width:50%" readonly/>
+  <b>El puntaje por acierto es de 1000 puntos. Cuanto mas rapido resuelva el puntaje sera mayor.</b> <br>
+</div>
+
+<div class="cuadrados" *ngIf="mostrarParaResolver">
     
-  </li>
-  <li>
-   Segundo número: <input [(ngModel)]="nuevoJuego.numeroIngresado" placeholder="ingrese numero" name="numeroIngresado" type="text" class="form-control" style="width:50%" readonly/>
+    <div class="cuenta">
+        <h1 style="color:white;">{{nuevoJuego.numeroUno}} </h1>
+    </div>
+
+     <div class="cuenta">
+        <h1 style="color:white">{{nuevoJuego.operadorToShow}} </h1>
+     </div>
+
+     <div class="cuenta">
+        <h1 style="color:white">{{nuevoJuego.numeroDos}} </h1>
+    </div>
+
+    <h1 class="h1Igual">=</h1>
+
+    <input type="number" class="inputResultado" [(ngModel)]="nuevoJuego.numeroIngresando">
+</div>
+
+   <h2 *ngIf="mostrarParaResolver" style="padding-top:20px;" ><button (click)="verificar()" class="btn btn-success btn-lg">Verificar {{Tiempo}} </button></h2>
+
+<div id="snackbar">{{Mensajes}}</div>
+
+
+
+  <!--Tag de muestreo final-->
+    <div style="text-align:center;margin-top:100px;">
+            <p *ngIf="mostrarFinalBtnReiniciar" style="margin-bottom:100px;font-size:40px;">{{mensajeResultado}}.</p>
+            <button class="btn btn-md btn-primary btn-guardarP" *ngIf="mostrarFinalBtnGuardar" (click)="GuardarPuntaje()">Guardar puntaje</button>
+            <button class="btn btn-md btn-reiniciar" *ngIf="mostrarFinalBtnReiniciar" (click)="Reiniciar()">Reiniciar juego</button>
+    </div>
+
+
+            <button type="button" *ngIf="mostrarJugarBtn" class="btn btn-success btn-lg btn-jugar" (click)="NuevoJuego()"><b class="textoBotonJugar">JUGAR</b></button>
+
+
     
-  </li>
-  <li>
-    Respuesta: <input [(ngModel)]="nuevoJuego.numeroIngresado" placeholder="ingrese numero" name="numeroIngresado" type="text" class="form-control" style="width:50%"/>
-     
-   </li>
-  <li>
-    <h2 [hidden]="ocultarVerificar" ><button (click)="verificar()" class="btn btn-success btn-lg">Verificar {{Tiempo}} </button></h2>
-  </li>
-  <li>
-    <h2 [hidden]="!ocultarVerificar"><button  (click)="NuevoJuego()"  class="btn btn-info btn-lg">Nuevo</button></h2>
-  </li>
-  <li>
-    <h2><p><i class="fa fa-spinner fa-spin"></i>Esperando numero...</p></h2>
+    <div class="estiloDivTabla" >
+            <h1 class="headerPuntajes">Mejores Puntajes</h1>
+      <table class="table table-bordered" style="background:grey;text-align:center;">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Termino en</th>
+            <th>Puntaje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let puntajes of puntajesParaTabla['puntajes']">
+            <td>{{puntajes.usuario}}</td>
+            <td>{{puntajes.tiempo}}s</td>
+            <td>{{puntajes.puntaje}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
 
-    <h3 [hidden]="!nuevoJuego.gano">usted adivino el número</h3>
-    <h3 [hidden]="nuevoJuego.gano">usted aún no gano </h3>
-  </li>
-</ul>
 
-</form>
+
+
+
+
+<style>
+
+  .estiloDivTabla
+  {
+    padding-left:5px;
+    margin-top: 100px;
+    width:600px;
+    position: absolute;
+    right: 350px;
+  }
+
+  .headerPuntajes
+  {
+    font-size: 40px;
+    text-align: center;
+  }
+    
+    .inputResultado
+    {
+        float:left;
+        height:100px;
+        width:100px;
+        margin-right:10px;
+        font-size: 50px;
+    }
+
+    .h1Igual
+    {
+        margin-right:10px;
+    float:left;
+    }
+
+.cuenta
+{
+    margin-right:10px;
+    float:left;
+    height:100px;
+    width:100px;
+    background-color:#6e746d;
+}
+
+.cuadrados
+{
+   /* width:100%; 
+    left: 20px;*/
+    margin-left: 400px;
+    text-align: center;
+    left: 750px;
+    margin-top:300px;
+}
+
+</style>

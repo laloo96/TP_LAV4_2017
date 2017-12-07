@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { RequestOptions } from '@angular/http/src/base_request_options';
 
 @Injectable()
 export class MiHttpService {
@@ -16,7 +17,7 @@ export class MiHttpService {
   public httpGetP ( url: string)
   {
     return this.http
-    .get( url )
+    .get( url)
     .toPromise()
     .then( this.extractData )
     .catch( this.handleError );
@@ -25,11 +26,10 @@ export class MiHttpService {
   public httpPostP( url: string, objeto: any )
   {
     return this.http
-    .get( url )
-    .subscribe( data => {
-      console.log( data );
-      return data;
-    });
+    .post(url,objeto)
+    .toPromise()
+    .then(this.extractData)
+    .catch(this.handleError);
   }
 
   public httpGetO ( url: string): Observable<Response>

@@ -1,5 +1,5 @@
 
-import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { JuegoAdivina } from '../../clases/juego-adivina'
 
 @Component({
@@ -8,34 +8,52 @@ import { JuegoAdivina } from '../../clases/juego-adivina'
   styleUrls: ['./adivina-el-numero.component.css']
 })
 export class AdivinaElNumeroComponent implements OnInit {
- @Output() enviarJuego: EventEmitter<any>= new EventEmitter<any>();
+
 
   nuevoJuego: JuegoAdivina;
   Mensajes:string;
   contador:number;
   ocultarVerificar:boolean;
+  mostrarJuego:boolean = true;
+  mostrarBTNjugar:boolean;
+  puntajesParaTabla:any;
+  resultadoJuego:boolean;
  
   constructor() { 
     this.nuevoJuego = new JuegoAdivina();
     console.info("numero Secreto:",this.nuevoJuego.numeroSecreto);  
     this.ocultarVerificar=false;
+    this.mostrarBTNjugar = true;
+    this.puntajesParaTabla = JSON.parse(localStorage.getItem("PuntajesAdivina"));
   }
+  
+  
+  
   generarnumero() {
+    this.mostrarBTNjugar = false;
     this.nuevoJuego.generarnumero();
     this.contador=0;
   }
+  
+  
+  
   verificar()
   {
     this.contador++;
     this.ocultarVerificar=true;
     console.info("numero Secreto:",this.nuevoJuego.gano);  
-    if (this.nuevoJuego.verificar()){
-      
-      this.enviarJuego.emit(this.nuevoJuego);
+    
+    this.resultadoJuego = this.nuevoJuego.verificar();
+
+    if (this.resultadoJuego){
+
       this.MostarMensaje("Sos un Genio!!!",true);
+      this.guardarPuntaje();
       this.nuevoJuego.numeroSecreto=0;
 
-    }else{
+    }
+    else
+    {
 
       let mensaje:string;
       switch (this.contador) {
@@ -69,15 +87,33 @@ export class AdivinaElNumeroComponent implements OnInit {
     console.info("numero Secreto:",this.nuevoJuego.gano);  
   }  
 
+  guardarPuntaje()
+  {
+    var puntajes = JSON.parse(localStorage.getItem("PuntajesAdivina"));
+    var usuario = localStorage.getItem("usuario");
+
+    if(usuario === null)
+      usuario  = "Invitado";
+
+    
+      puntajes["puntajes"].push({"usuario":usuario,"intentos":this.contador});
+    localStorage.setItem("PuntajesAdivina",JSON.stringify(puntajes));
+
+    this.puntajesParaTabla = JSON.parse(localStorage.getItem("PuntajesAdivina"));
+
+  }
+
   MostarMensaje(mensaje:string="este es el mensaje",ganador:boolean=false) {
+    
     this.Mensajes=mensaje;    
+    
     var x = document.getElementById("snackbar");
+    
     if(ganador)
-      {
-        x.className = "show Ganador";
-      }else{
-        x.className = "show Perdedor";
-      }
+      x.className = "show Ganador";  
+    else
+      x.className = "show Perdedor";
+    
     var modelo=this;
     setTimeout(function(){ 
       x.className = x.className.replace("show", "");
@@ -86,7 +122,9 @@ export class AdivinaElNumeroComponent implements OnInit {
     console.info("objeto",x);
   
    }  
-  ngOnInit() {
+  
+  
+   ngOnInit() {
   }
 
 }

@@ -1,0 +1,52 @@
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+   
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+#snackbar.Ganador {
+    background-color: #059F2F;
+}
+#snackbar.Perdedor {
+    background-color: #FF0000;
+}
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.btn-jugar
+{   
+    margin-top: 150px;
+    margin-left: 41%;
+    width: 300px;
+    height: 100px;
+}
+
+.textoBotonJugar
+{
+    font-size: 50px;
+}
+
+.btn-guardarP
+{
+  width: 150px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+.btn-reiniciar
+{
+  width: 150px;
+  height: 40px;
+}

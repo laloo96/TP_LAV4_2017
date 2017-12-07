@@ -1,0 +1,130 @@
+<button data-toggle="collapse" data-target="#demo" class="btn btn-primary btn-md">¿Como jugar?</button>
+
+<div id="demo" class="collapse" style="padding-left:5px;">
+  <b>1-Haga click en "Jugar".</b> <br>
+  <b>2-El juego comenzara al terminar la cuenta regresiva.</b>  <br>
+  <b>3-Se mostraran 5 banderas de distintos paises y usted debe seleccionar la opcion correcta.</b>  <br>
+
+  <b>El puntaje por acierto es de 1000 puntos por cada error se descuentan 100 puntos.</b> <br>
+</div>
+
+
+
+<div style="text-align:center;margin:0 auto; height:600px; width:600px; background-color:#2b56e2;">
+ 
+<div *ngIf="mostrarParaResolver" >
+  <img  src="../../../assets/banderas/{{misPaises['losPaises'][lastIndex].pais}}" style="height:200px;width:500px;">
+</div>
+
+<div *ngIf="mostrarParaResolver" class="divInputs">
+  <input type="radio" name="opcionIngresada" [(ngModel)]="opcionIngresada" value="{{misPaises['losPaises'][lastIndex].op1}}"> <label>{{misPaises['losPaises'][lastIndex].op1}}</label><br>
+  <input type="radio" name="opcionIngresada" [(ngModel)]="opcionIngresada" value="{{misPaises['losPaises'][lastIndex].op2}}"> <label>{{misPaises['losPaises'][lastIndex].op2}}</label><br>
+  <input type="radio" name="opcionIngresada" [(ngModel)]="opcionIngresada" value="{{misPaises['losPaises'][lastIndex].op3}}"> <label>{{misPaises['losPaises'][lastIndex].op3}}</label><br>
+</div>
+
+<button type="button" (click)="tomarRespuesta()" *ngIf="mostrarParaResolver" class="btn btn-lg btnSiguiente"><b>Siguiente</b></button>
+
+<p *ngIf="mostrarToF" [class]="mensajeToF == 'Incorrecto' ? 'incorrecto' : 'correcto'">¡{{mensajeToF}}!</p>
+
+<button *ngIf="mostrarBtnJugar" type="button" class="btn btn-success btn-lg btn-jugar" (click)="comenzarJuego()"><b class="textoBotonJugar">JUGAR</b></button>
+
+
+<!--botnosFinal-->
+
+<div *ngIf="mostrarBotonesFinal" class="divBotonesFinal">
+  <p style="margin-bottom:100px;font-size:40px;"> El puntaje final es de {{puntaje}} puntos.</p>
+  <button type="button" class="btn btn-lg btn-success" style="margin-right:15px;" (click)="GuardarPuntaje()"><b>Guardar Puntaje</b></button>
+  <button type="button" class="btn btn-lg btn-danger" style="margin-left:15px;" (click)="ReiniciarJuego()"><b>Reiniciar Juego</b></button>
+</div>
+
+</div>
+
+<h1 class="headerPuntajes">Mejores Puntajes</h1>
+<div class="estiloDivTabla" >
+  <table class="table table-bordered" style="background:grey;text-align:center;">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Puntaje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let puntajes of puntajesParaTabla['puntajes']">
+        <td>{{puntajes.usuario}}</td>
+        <td>{{puntajes.puntaje}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+
+.estiloDivTabla
+  {
+    text-align:center;
+    padding-left:5px;
+    width:600px;
+    position: absolute;
+    left: 341px;
+  }
+
+  .headerPuntajes
+  {
+    font-size: 40px;
+    text-align: center;
+  }
+  
+.divBotonesFinal
+{
+  padding-top:150px;
+}
+.incorrecto
+  {
+    color:red;
+    font-size: 40px;
+  }
+
+  .correcto
+  {
+    color:green;
+    font-size: 40px;
+  }
+
+  .btn-jugar
+  {   
+      margin-top: 40%;
+      width: 300px;
+      height: 100px;
+  }
+
+  .divInputs
+  {
+    margin-bottom:15px;
+  }
+
+  input[type='radio'], label{   
+    vertical-align: baseline;
+    padding: 10px;
+    margin: 10px;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode";
+    font-size: 20px;
+    color: black;
+ }
+
+ .btnSiguiente
+ {
+  height: 80px;
+   width: 150px;
+    color: green;
+    margin-right: 10px;
+ }
+
+ .btnSaltar
+ {
+   height: 80px;
+   width: 150px;
+    color: red;
+    margin-left: 10px;
+ }
+
+</style>
